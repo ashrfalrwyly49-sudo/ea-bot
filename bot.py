@@ -11,7 +11,7 @@ from pathlib import Path
 # ============================================
 # 🔑 توكن البوت (تم التحديث)
 # ============================================
-BOT_TOKEN = "8770824530:AAFLhB2FAi-tMqJ_pdBMMGDmLVMzmCQpSCs"
+BOT_TOKEN = "8770824530:AAHkAWDMZZFdiB3uDADaM7XfM26u2qk86y0"
 
 # ============================================
 # 📋 إعدادات Logging
