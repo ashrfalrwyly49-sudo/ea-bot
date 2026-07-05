@@ -9,7 +9,12 @@ import logging
 from pathlib import Path
 
 # ============================================
-# 📋 إعدادات Logging احترافية
+# 🔑 توكن البوت (تم التحديث)
+# ============================================
+BOT_TOKEN = "8770824530:AAFLhB2FAi-tMqJ_pdBMMGDmLVMzmCQpSCs"
+
+# ============================================
+# 📋 إعدادات Logging
 # ============================================
 logging.basicConfig(
     level=logging.INFO,
@@ -20,11 +25,6 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger(__name__)
-
-# ============================================
-# 🔑 توكن البوت
-# ============================================
-BOT_TOKEN = "8770824530:AAFqrPDiqQfKjYMgF9KWZ9H8sc9G8Rc8BAQ"
 
 # ============================================
 # 📁 الإعدادات
@@ -76,7 +76,7 @@ def clear_file(path):
             logger.error(f"clear_file error: {e}")
 
 # ============================================
-# 🔍 دوال الفحص (مع طباعة الأخطاء الحقيقية)
+# 🔍 دوال الفحص
 # ============================================
 def check_ea(email, proxy=None):
     try:
@@ -270,10 +270,9 @@ def generate_emails(first, second=''):
     return list(set(final))
 
 # ============================================
-# 🌐 دوال التلغرام (محسّنة)
+# 🌐 دوال التلغرام
 # ============================================
 def send_message(chat_id, text, keyboard=None):
-    """إرسال رسالة باستخدام urllib.parse.urlencode لتجنب HTTP 400"""
     try:
         url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
         payload = {
@@ -289,15 +288,13 @@ def send_message(chat_id, text, keyboard=None):
         req.add_header('Content-Type', 'application/x-www-form-urlencoded')
         
         with urllib.request.urlopen(req, timeout=10) as r:
-            response = r.read().decode()
-            logger.info(f"Message sent to {chat_id}: {text[:50]}...")
+            logger.info(f"Message sent to {chat_id}")
             return True
     except Exception as e:
         logger.error(f"send_message error: {repr(e)}")
         return False
 
 def send_file(chat_id, file_path, caption=""):
-    """إرسال ملف باستخدام multipart/form-data"""
     try:
         url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendDocument"
         boundary = "----WebKitFormBoundary7MA4YWxkTrZu0gW"
@@ -323,7 +320,6 @@ def send_file(chat_id, file_path, caption=""):
         return False
 
 def get_updates(offset=None):
-    """جلب التحديثات مع طباعة الأخطاء التفصيلية"""
     try:
         url = f"https://api.telegram.org/bot{BOT_TOKEN}/getUpdates?timeout=25"
         if offset:
@@ -339,7 +335,7 @@ def get_updates(offset=None):
         return []
 
 # ============================================
-# 🎛️ أزرار تفاعلية
+# 🎛️ أزرار
 # ============================================
 def phase_keyboard():
     return {
@@ -362,7 +358,7 @@ def proxy_keyboard():
     }
 
 # ============================================
-# ⚙️ تنفيذ الفحوصات (مع Logging)
+# ⚙️ تنفيذ الفحوصات
 # ============================================
 def run_ea_check(chat_id, emails, proxies):
     logger.info(f"Starting EA check for {len(emails)} emails - chat_id: {chat_id}")
@@ -473,7 +469,7 @@ def run_psn_check(chat_id, emails, proxies):
     logger.info(f"PSN check completed for chat_id: {chat_id}")
 
 # ============================================
-# 🧠 معالج الأوامر (مع Logging كامل)
+# 🧠 معالج الأوامر
 # ============================================
 def process_command(chat_id, text):
     logger.info(f"Command received - chat_id: {chat_id}, text: {text}")
@@ -638,7 +634,7 @@ def process_callback(chat_id, data):
         return
 
 # ============================================
-# 🏃 تشغيل البوت (مع Logging وحماية 409)
+# 🏃 تشغيل البوت
 # ============================================
 def run():
     global bot_running
@@ -707,7 +703,6 @@ def run():
                     chat_id = cb['message']['chat']['id']
                     data = cb['data']
                     try:
-                        # إجابة سريعة لتجنب تكرار الضغط
                         answer_url = f"https://api.telegram.org/bot{BOT_TOKEN}/answerCallbackQuery?callback_query_id={cb['id']}"
                         urllib.request.urlopen(answer_url, timeout=5)
                     except Exception as e:
