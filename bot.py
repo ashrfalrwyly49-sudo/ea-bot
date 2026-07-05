@@ -9,7 +9,7 @@ from pathlib import Path
 # ============================================
 # 🔑 توكن البوت (تم التحديث)
 # ============================================
-BOT_TOKEN = "8770824530:AAFqrPDiqQfKjYMgF9KWZ9H8sc9G8Rc8BAQ"
+BOT_TOKEN = "8770824530:AAFLhB2FAi-tMqJ_pdBMMGDmLVMzmCQpSCs"
 
 # ============================================
 # 📁 الإعدادات
